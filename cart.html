@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart Page</title>
+    <style>
+      /* Write all necessery css here  */
+
+      *{
+        text-align: center;
+      }
+
+      
+      #cart-container{
+        height: 100%;
+        width: 100%;
+        /* border: 1px solid black; */
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        text-align: center;
+        gap: 20px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      
+      }
+
+      #cart-container img{
+        width: 100%;
+        /* border: 1px solid black; */
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <h1>Masai E-Commerce</h1>
+      <a href="./index.html">Home</a>
+      <a href="./cart.html">Cart</a>
+    </div>
+    <h1 id="total">Your Total cart Price is:- <span id="cart-total">0</span></h1>
+    <div id="cart-container">
+      <!-- Here Append All the cart Products  -->
+    </div>
+  </body>
+  <script>
+    // Write all necessery JS here 
+
+
+let cartItem = JSON.parse(localStorage.getItem("cart"))
+let count=1
+
+    function displayData(data){         
+      data.forEach(function(element){
+
+      let div = document.createElement("div")
+
+      let img = document.createElement("img")
+      img.setAttribute("src",element.img)
+
+      let brand = document.createElement("h2")
+      brand.innerText = element.brand
+
+      let price = document.createElement("h3")
+      price.innerText = element.price
+
+      let detail = document.createElement("p")
+      detail.innerText = element.details
+
+      let Category= document.createElement("p")
+      Category.innerText = element.category
+
+      let increase = document.createElement("button")
+      increase.innerText = " + "
+      increase.addEventListener("click",()=>{
+        count++
+              
+      })
+
+      let span = document.createElement("span")
+      span.innerText = count
+
+      let decrease = document.createElement("button")
+      decrease.innerText = " -"
+      increase.addEventListener("click",()=>{
+       count--
+       console.log(count)
+              
+      })
+      
+
+      let button = document.createElement("button")
+        button.innerText = " remove"
+        button.addEventListener("click",()=>{
+           
+          div.style.display= "none"
+           
+        })
+
+
+      div.append(img,brand,price,detail,Category,increase,span,decrease,button)
+      document.querySelector("#cart-container").append(div)
+
+      })
+
+}  
+
+
+displayData(cartItem)
+
+let price=0
+cartItem.forEach(function(element){
+ 
+
+  price=price+element.price
+ 
+})
+
+let total = document.querySelector("#cart-total")
+total.innerText = price
+
+
+  </script>
+</html>
